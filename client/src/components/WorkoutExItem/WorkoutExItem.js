@@ -42,8 +42,8 @@ const WorkoutExItem = ({exercise, isSubmit, returnVals, i})=>{
     { 
       id:exercise.id, 
       name: exercise.name,
-      repeats:0,
-      measurment:0
+      repeats:exercise.repeats,
+      measurment:exercise.measurment
     },
     Validation
   );
@@ -55,7 +55,7 @@ const WorkoutExItem = ({exercise, isSubmit, returnVals, i})=>{
       if(Object.keys(err).length === 0){
         returnVals(values);
       }else{
-        returnVals({});
+        returnVals({},err);
       }
     }
   },[isSubmit]);

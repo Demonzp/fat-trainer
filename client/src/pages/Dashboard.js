@@ -26,6 +26,10 @@ function DashboardPage(){
     getWorkouts();
   },[]);
 
+  const handlerPickDate = (date)=>{
+    history.push(`${RoutNames.newWorkout}?date=${date}`);
+  }
+
   const handlerAddNewExercise = (e)=>{
     history.push(RoutNames.newExercise);
   }
@@ -37,7 +41,10 @@ function DashboardPage(){
           <Button color="primary" onClick={handlerAddNewExercise}>Add New Exercise</Button>
           <Button color="primary">Add New Workout</Button>
         </Grid>
-        <InfiniteCalendar height={550}/>
+        <InfiniteCalendar
+          onSelect={handlerPickDate}
+          height={550}
+        />
       </GridItem>
     </GridContainer>
   );

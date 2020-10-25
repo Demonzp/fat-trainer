@@ -16,8 +16,11 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 
 import {useAppState} from "state/appState";
+import {useLocation} from "react-router-dom";
+import { getUrlParams } from "utils/global";
 
 import WorkoutExItem from "components/WorkoutExItem/WorkoutExItem.js";
+import ExercisePicker from "components/ExercisePicker/ExercisePicker.js";
 
 const styles = {
   cardTitleWhite: {
@@ -36,40 +39,95 @@ const styles = {
   
 const useStyles = makeStyles(styles);
 
+let zIndex = 0;
+
 function NewWorkoutPage(){
 
   const classes = useStyles();
+  const location = useLocation();
+  const {date=null} = getUrlParams(location);
 
   const [isSubmit, setIsSubmit] = useState(false);
-  const [workoutExs, setWorkoutExs] = useState([
-    {
-      id:'dawdawd',
-      name:'ex1',
-      measureType:'Kilograms'
-    },
-    {
-      id:'ddawddawd',
-      name:'ex2',
-      measureType:'Meters'
+  const [pickDate, setPickDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const [workoutExs, setWorkoutExs] = useState([]);
+
+  const handleClose = (idEx) => {
+    setOpen(false);
+    if(!idEx){
+      return;
     }
-  ]);
-  const [{exercises}, {updateExercises, getExercises}] = useAppState();
+    const ex = {
+      ...exercises.find(ex=>ex.id===idEx),
+      repeats:1,
+      measurment:1,
+      zIndex
+    };
+
+    zIndex++;
+
+    const newExs = [
+      ...workoutExs,
+      ex
+    ];
+
+    setWorkoutExs(newExs);
+  };
+
+  const [{exercises}, {getExercises, createWorkout}] = useAppState();
 
   useEffect(()=>{
     getExercises();
+    if(date){
+      let d = new Date(date);
+      setPickDate(new Date(d.setHours(d.getHours()+12)));
+    }
   },[]);
 
-  // let newExercises = [];
-  // const numExercises = exercises.length;
-  // let numCallbacks = 0;
+  let newWorkoutEx = [];
+  const numWorkoutEx = workoutExs.length;
+  let numCallbacks = 0;
+  let numErrs = 0;
 
   const handleSubmit = (e)=>{
     e.preventDefault();
-    //setIsSubmit(true);
+    setIsSubmit(true);
   }
 
-  function returnVals(vals){
+  function returnVals(vals,errs){
+    numCallbacks++;
 
+    if(errs){
+      numErrs++;
+    }
+
+    if(Object.keys(vals).length !== 0){
+      const idx = workoutExs.findIndex(exercise=>exercise.id===vals.id);
+
+      newWorkoutEx.push({
+        ...workoutExs[idx],
+        ...vals
+      });
+    }
+
+    if(numCallbacks===numWorkoutEx){
+      setIsSubmit(false);
+      if(numErrs<=0 && newWorkoutEx.length>0){
+        createWorkout({date: pickDate, exercises: newWorkoutEx});
+      }
+    }
+  }
+
+  const parseDate = (paramDate)=>{
+    if(paramDate == 'Invalid Date'){
+      setPickDate(new Date());
+    }
+    return `${paramDate.getDate()}-${paramDate.getMonth()+1}-${String(paramDate.getFullYear()).slice(2)}`;
   }
 
   return(
@@ -84,9 +142,10 @@ function NewWorkoutPage(){
               <CardBody>
                 <List>
                   <ListItem>
-                    <Button color="primary">Add Exercise</Button>
+                    <Button color="primary" onClick={handleClickOpen}>Add Exercise</Button>
                   </ListItem>
                 </List>
+                <ExercisePicker workoutExs={workoutExs} open={open} onClose={handleClose} />
                 <List>
                   {workoutExs.map((exercise,i)=>{
                     return (
@@ -105,6 +164,9 @@ function NewWorkoutPage(){
                 <List>
                   <ListItem>
                     <Button color="primary" type="submit">Create Workout</Button>
+                  </ListItem>
+                  <ListItem>
+                    <span>on date: {parseDate(pickDate)}</span>
                   </ListItem>
                 </List>
               </CardFooter>

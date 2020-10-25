@@ -72,6 +72,9 @@ const appStateReducer = (state, action) => {
     case "SET_WORKOUTS":{
       return {...state, workouts: action.workouts}
     }
+    case "ADD_WORKOUT":{
+      return {...state, workouts:[...state.workouts, action.workout]}
+    }
     default:
       return state
   }
