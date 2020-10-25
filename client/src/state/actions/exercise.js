@@ -150,11 +150,11 @@ const Exercise = (state, dispath, axios, addMessage)=>{
       ...state.exercises.slice(0, idx),
       {
         ...state.exercises[idx+1],
-        zIndex: state.exercises[idx+1].zIndex-1
+        zIndex: state.exercises[idx].zIndex
       },
       {
         ...state.exercises[idx],
-        zIndex: state.exercises[idx].zIndex+1
+        zIndex: state.exercises[idx+1].zIndex
       },
       ...state.exercises.slice(idx + 2)
     ];
@@ -173,11 +173,11 @@ const Exercise = (state, dispath, axios, addMessage)=>{
       ...state.exercises.slice(0, idx-1),
       {
         ...state.exercises[idx],
-        zIndex: state.exercises[idx].zIndex-1
+        zIndex: state.exercises[idx-1].zIndex
       },
       {
         ...state.exercises[idx-1],
-        zIndex: state.exercises[idx-1].zIndex+1
+        zIndex: state.exercises[idx].zIndex
       },
       ...state.exercises.slice(idx+1)
     ];
