@@ -33,6 +33,13 @@ const Auth = (_, dispath, axios, addMessage)=>{
         return Promise.reject(error);
       }
 
+      if(response.status === 401 || response.status === 500 || response.status === 400){
+        addMessage({type:MsgTypes.error,txt:response.data.message});
+        dispath({type: "AUTH_CHANGE", token:null, user:null, activRoutes:getAuthRoutes()});
+        localStorage.clear();
+        return Promise.reject(response.data);
+      }
+
       dispath({type: "AUTH_CHANGE", token, user:{email:response.data.email},activRoutes:getDashboardRoutes()});
 
       return Promise.resolve(response.data);

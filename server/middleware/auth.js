@@ -11,11 +11,15 @@ module.exports = async (req, res, next) => {
 
     try {
         await jwt.verify(token, process.env.ACCESS_SECRET_KEY, (err, user) => {
+            if(err){
+                throw err;
+            }
             req.user = { userID: user };
         });
     } catch (err) {
         if (err instanceof jwt.JsonWebTokenError) {
             res.status(401).json({ message: 'Invalid Token!' });
+            return;
         }
     }
 
