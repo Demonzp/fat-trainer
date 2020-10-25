@@ -1,0 +1,1 @@
+export const measurementTypes = ["Kilograms","Meters","Minutes"];
