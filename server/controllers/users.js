@@ -10,10 +10,13 @@ userRouter.get('/users/', authMdw, async (req, res) => {
     try {
         const { userID } = req.user;
         const user = await User.findOne({ _id: userID });
+        if(!user){
+            throw new Error('maby invalid token');
+        }
         res.json(user);
     } catch (err) {
         console.log(err);
-        res.json({ message: err.message });
+        res.status(401).json({ message: err.message });
     }
 });
 
