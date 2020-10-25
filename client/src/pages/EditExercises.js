@@ -63,7 +63,7 @@ function EditExercisesPage(){
 
       const idx = exercises.findIndex(exercise=>exercise.id===vals.id);
       for (const key in exercises[idx]) {
-        if(exercises[idx][key]!==vals[key]){
+        if(exercises[idx][key]!==vals[key] && vals.hasOwnProperty(key)){
           newExercises.push(vals);
           break;
         }
