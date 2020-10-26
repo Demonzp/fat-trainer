@@ -21,7 +21,6 @@ const Workout = (state, dispath, axios, addMessage)=>{
       addMessage({type:MsgTypes.error,txt:response.data.message});
       return Promise.reject(response.data);
     }
-    console.log('workouts = ', response.data);
     dispath({type:"SET_WORKOUTS", workouts:response.data});
 
     return Promise.resolve(response.data);

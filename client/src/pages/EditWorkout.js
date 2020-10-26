@@ -40,7 +40,6 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 const getFullExercises = (workExs, exs)=>{
-  console.log('exs = ', exs);
   const full = workExs.map(workEx=>{
     let idx = exs.findIndex(ex=>ex.id===workEx._id);
     

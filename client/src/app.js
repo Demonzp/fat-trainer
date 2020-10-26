@@ -58,14 +58,11 @@ const switchRoutes = ()=>{
 const useStyles = makeStyles(styles);
 
 function App({...rest}) {
-  //у меня без этого не пашет роутинг((
   useLocation();
 
   const [{activRoutes}, {isAuth}] = useAppState();
 
   useEffect(()=>{
-    //только при тестировании на проде удалить строку
-    axios.get("http://localhost:5000/users/all").then(res=>console.log('all users = ', res.data));
     isAuth();
   },[]);
 

@@ -4,12 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { 
         Grid,
         ListItem, 
-        TextField, 
-        FormControl, 
-        InputLabel, 
-        Select, 
-        MenuItem, 
-        FormHelperText,
+        TextField,
         Button
 } from "@material-ui/core";
 
@@ -19,10 +14,6 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 import UseValidationForm from "utils/useValidationForm";
 import {Exercise as Validation} from "validation/exercise";
-
-import {measurementTypes} from "constants/selectMeasurement";
-
-import {useAppState} from "state/appState";
 
 const styles = {
   exItem:{
@@ -35,8 +26,6 @@ const useStyles = makeStyles(styles);
 const WorkoutExItem = ({exercise, isSubmit, returnVals, delEx, downExercise, upExercise})=>{
   const classes = useStyles();
 
-  //const [{exercises}, {downExercise, upExercise, delExercise}] = useAppState();
-  //console.log(' measurment = ', exercise.measurment);
   const { handleChange, values, errors, setErrors } = UseValidationForm(
     ()=>{},
     { 

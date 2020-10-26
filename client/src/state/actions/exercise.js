@@ -9,8 +9,7 @@ const newExercise = (ex)=>{
     id:ex._id,
     zIndex
   }
-
-  //delete newEx._id;
+  
   zIndex++;
   return newEx;
 }

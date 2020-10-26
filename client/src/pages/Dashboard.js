@@ -1,7 +1,6 @@
 import React,{ useEffect, useState } from "react";
 
 import { useHistory } from "react-router-dom";
-//import { makeStyles } from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button.js";
 import { Grid } from "@material-ui/core";
 // core components
@@ -34,7 +33,7 @@ function DashboardPage(){
   },[workouts]);
 
   const handlerPickDate = (date)=>{
-    //console.log('date = ', date);
+
     if(!date){
       history.push(`${RoutNames.newWorkout}`);
       return;
@@ -47,13 +46,6 @@ function DashboardPage(){
     }else{
       history.push(`${RoutNames.editWorkout}?date=${date}`);
     }
-    //console.log('isWork = ', isWork);
-
-    //history.push(`${RoutNames.newWorkout}?date=${date}`);
-  }
-
-  const gg = (data)=>{
-    console.log('data = ', data);
   }
 
   const handlerAddNewExercise = (e)=>{

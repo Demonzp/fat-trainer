@@ -40,19 +40,16 @@ function SimpleDialog(props) {
       <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
       <List>
         {exercises.map((ex) => (
-          // workoutExs.find(workoutEx=>workoutEx.id===ex.id)?
-          //   null
-          // :
-            <ListItem button onClick={() => handleListItemClick(ex.id)} key={ex.id}>
-              <ListItemAvatar>
-                <Avatar className={classes.avatar}>
-                  {ex.measureType=="Kilograms"?<FitnessCenterIcon />:null}
-                  {ex.measureType=="Meters"?<TrendingFlatIcon />:null}
-                  {ex.measureType=="Minutes"?<AlarmIcon />:null}
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={`${ex.name}, ${ex.measureType}`} />
-            </ListItem>
+          <ListItem button onClick={() => handleListItemClick(ex.id)} key={ex.id}>
+            <ListItemAvatar>
+              <Avatar className={classes.avatar}>
+                {ex.measureType=="Kilograms"?<FitnessCenterIcon />:null}
+                {ex.measureType=="Meters"?<TrendingFlatIcon />:null}
+                {ex.measureType=="Minutes"?<AlarmIcon />:null}
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={`${ex.name}, ${ex.measureType}`} />
+          </ListItem>
         ))}
       </List>
     </Dialog>

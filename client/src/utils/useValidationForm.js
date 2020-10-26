@@ -10,7 +10,7 @@ const UseValidationForm = (callback, initialState = {}, Validation) => {
     // Создаём функцию изменения.
     const handleChange = (event) => {
         const { name, value } = event.target;
-        //console.log('name = ', name, 'val = ', value);
+
         setValues({
             ...values,
             [name]: value
@@ -22,12 +22,12 @@ const UseValidationForm = (callback, initialState = {}, Validation) => {
         event.preventDefault();
         // Обработчик ошибок.
         setErrors(Validation(values));
-        //console.log('errors = ', errors);
+
         setIsSubmitting(true);
     };
 
     const handleReset = (event) => {
-        //console.log('Reset completed.');
+
         setIsSubmitting(false);
         setErrors({});
         setValues(initialState);

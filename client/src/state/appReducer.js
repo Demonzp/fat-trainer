@@ -74,7 +74,6 @@ const appStateReducer = (state, action) => {
       return {...state, isLoadedWorkouts: true, workouts: action.workouts}
     }
     case "ADD_WORKOUT":{
-      console.log('ADD_WORKOUT_', action.workout);
       return {...state, workouts:[...state.workouts, action.workout]}
     }
     case "UPDATE_WORKOUT":{

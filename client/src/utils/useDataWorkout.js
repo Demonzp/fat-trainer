@@ -111,7 +111,7 @@ const useDataWorkout = (type)=>{
   }
 
   const delEx = (key)=>{
-    console.log('idEx = ', key);
+
     const idx = workoutExs.findIndex((ex)=> ex.key===key);
 
     const newArr = [
