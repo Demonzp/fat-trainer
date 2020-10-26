@@ -54,7 +54,7 @@ function NewWorkoutPage(){
     delEx,
     upExercise,
     downExercise
-  } = useDataWorkout();
+  } = useDataWorkout("create");
 
   return(
     <div>

@@ -49,9 +49,31 @@ const Workout = (state, dispath, axios, addMessage)=>{
 
   }
 
+  const updateWorkout = async (data)=>{
+    let response = {};
+
+    try {
+      response = await axios().put(`/workout/update/${data.id}`, data);
+    } catch (error) {
+      console.log('err = ', error);
+      addMessage({type:MsgTypes.error,txt:error.toString()});
+      return Promise.reject(error);
+    }
+
+    if(response.status === 401 || response.status === 500 || response.status === 400){
+      addMessage({type:MsgTypes.error,txt:response.data.message});
+      return Promise.reject(response.data);
+    }
+
+    dispath({type:"ADD_WORKOUT", workout:response.data});
+    addMessage({type:MsgTypes.success,txt:response.data.message});
+    return Promise.resolve(response.data);
+  }
+
   return {
     getWorkouts,
-    createWorkout
+    createWorkout,
+    updateWorkout
   }
 }
 

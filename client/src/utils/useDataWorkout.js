@@ -5,13 +5,17 @@ import {useLocation} from "react-router-dom";
 import { getUrlParams, parseDate, upInArray, downInArray } from "utils/global";
 
 let zIndex = 0;
+//let pickDate = new Date();
+//let isSetDate = false;
 
-const useDataWorkout = ()=>{
+const useDataWorkout = (type)=>{
   const location = useLocation();
   const {date=null} = getUrlParams(location);
 
   const [isSubmit, setIsSubmit] = useState(false);
   const [pickDate, setPickDate] = useState(new Date());
+  const [idWorkout, setIdWorkout] = useState(null);
+  //console.log('useState = ', pickDate);
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -44,7 +48,7 @@ const useDataWorkout = ()=>{
     setWorkoutExs(newExs);
   };
 
-  const [{exercises}, {getExercises, getWorkouts, createWorkout}] = useAppState();
+  const [{exercises}, {getExercises, getWorkouts, createWorkout, updateWorkout}] = useAppState();
 
   useEffect(()=>{
     getExercises();
@@ -91,7 +95,11 @@ const useDataWorkout = ()=>{
     if(numCallbacks===numWorkoutEx){
       setIsSubmit(false);
       if(numErrs<=0 && newWorkoutEx.length>0){
-        createWorkout({date: pickDate, exercises: newWorkoutEx});
+        if(type==="create"){
+          createWorkout({date: pickDate, exercises: newWorkoutEx});
+        }else if(type==="update"){
+          updateWorkout({id:idWorkout, date: pickDate, exercise: newWorkoutEx});
+        } 
       }
     }
   }
@@ -127,10 +135,12 @@ const useDataWorkout = ()=>{
     isSubmit,
     pickDate,
     open,
-    handleClickOpen,
     workoutExs,
-    handleClose,
     exercises,
+    setWorkoutExs,
+    setIdWorkout,
+    handleClickOpen,
+    handleClose,
     handleSubmit,
     returnVals,
     dateToString,
