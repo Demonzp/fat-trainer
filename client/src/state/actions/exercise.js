@@ -1,5 +1,5 @@
 import MsgTypes from "../../constants/msgTypes";
-import { upInArray, downInArray } from "utils/global";
+import { upInArray, downInArray, createId } from "utils/global";
 
 let zIndex = 0;
 
@@ -7,7 +7,8 @@ const newExercise = (ex)=>{
   let newEx = {
     ...ex,
     id:ex._id,
-    zIndex
+    zIndex,
+    key:createId(10)
   }
   
   zIndex++;

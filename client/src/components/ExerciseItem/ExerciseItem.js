@@ -93,7 +93,7 @@ const ExerciseItem = ({exercise, isSubmit, returnVals, i})=>{
             variant="contained"
             color="primary"
             size="large"
-            onClick={()=>upExercise(exercise.id)}
+            onClick={()=>upExercise(exercise.key)}
             className={classes.button}
           >
             <ArrowUpwardIcon />
@@ -105,7 +105,7 @@ const ExerciseItem = ({exercise, isSubmit, returnVals, i})=>{
             variant="contained"
             color="primary"
             size="large"
-            onClick={()=>downExercise(exercise.id)}
+            onClick={()=>downExercise(exercise.key)}
             className={classes.button}
           >
             <ArrowDownwardIcon />
