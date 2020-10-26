@@ -7,6 +7,7 @@ import DashboardPage from "pages/Dashboard";
 import NewExercisePage from "pages/NewExercise";
 import EditExercisesPage from "pages/EditExercises";
 import NewWorkoutPage from "pages/NewWorkout";
+import EditWorkoutPage from "pages/EditWorkout";
 
 import RoutNames from "./constants/routNames";
 
@@ -70,6 +71,15 @@ const Routes = [
       name: "New Workout",
       icon: Person,
       component: NewWorkoutPage,
+      layout: "",
+      middelware:"auth",
+      hidden: false
+    },
+    {
+      path: RoutNames.editWorkout,
+      name: "Edit Workout",
+      icon: Person,
+      component: EditWorkoutPage,
       layout: "",
       middelware:"auth",
       hidden: false

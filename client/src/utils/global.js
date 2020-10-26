@@ -25,7 +25,60 @@ const getUrlParams = (location)=>{
         );
 }
 
+const parseDate = (date)=>{
+    return `${date.getDate()}-${date.getMonth()+1}-${String(date.getFullYear()).slice(2)}`;
+}
+
+const downInArray = (id, array) =>{
+    const idx = array.findIndex((el)=>el.id===id);
+
+    if(idx>=array.length-1){
+      return array;
+    }
+
+    const newArr = [
+      ...array.slice(0, idx),
+      {
+        ...array[idx+1],
+        zIndex: array[idx].zIndex
+      },
+      {
+        ...array[idx],
+        zIndex: array[idx+1].zIndex
+      },
+      ...array.slice(idx + 2)
+    ];
+
+    return newArr;
+}
+
+const upInArray = (id, array) =>{
+    const idx = array.findIndex((ex)=>ex.id===id);
+
+    if(idx===0){
+      return array;
+    }
+
+    const newArr = [
+      ...array.slice(0, idx-1),
+      {
+        ...array[idx],
+        zIndex: array[idx-1].zIndex
+      },
+      {
+        ...array[idx-1],
+        zIndex: array.zIndex
+      },
+      ...array.slice(idx+1)
+    ];
+
+    return newArr;
+}
+
 module.exports = {
     createId,
-    getUrlParams
+    getUrlParams,
+    parseDate,
+    downInArray,
+    upInArray
 };

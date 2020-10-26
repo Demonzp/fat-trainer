@@ -32,11 +32,11 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const WorkoutExItem = ({exercise, isSubmit, returnVals, i})=>{
+const WorkoutExItem = ({exercise, isSubmit, returnVals, delEx, downExercise, upExercise})=>{
   const classes = useStyles();
 
   //const [{exercises}, {downExercise, upExercise, delExercise}] = useAppState();
-
+  //console.log(' measurment = ', exercise.measurment);
   const { handleChange, values, errors, setErrors } = UseValidationForm(
     ()=>{},
     { 
@@ -117,7 +117,7 @@ const WorkoutExItem = ({exercise, isSubmit, returnVals, i})=>{
           variant="contained"
           color="primary"
           size="large"
-          onClick={()=>{}}
+          onClick={()=>{upExercise(exercise.id)}}
           className={classes.button}
         >
           <ArrowUpwardIcon />
@@ -126,7 +126,7 @@ const WorkoutExItem = ({exercise, isSubmit, returnVals, i})=>{
           variant="contained"
           color="primary"
           size="large"
-          onClick={()=>{}}
+          onClick={()=>{downExercise(exercise.id)}}
           className={classes.button}
         >
           <ArrowDownwardIcon />
@@ -135,7 +135,7 @@ const WorkoutExItem = ({exercise, isSubmit, returnVals, i})=>{
           variant="contained"
           color="primary"
           size="large"
-          onClick={()=>{}}
+          onClick={()=>{delEx(exercise.id)}}
           className={classes.button}
         >
           <ClearIcon />

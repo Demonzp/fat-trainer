@@ -1,0 +1,143 @@
+import {useState, useEffect} from "react";
+
+import {useAppState} from "state/appState";
+import {useLocation} from "react-router-dom";
+import { getUrlParams, parseDate, upInArray, downInArray } from "utils/global";
+
+let zIndex = 0;
+
+const useDataWorkout = ()=>{
+  const location = useLocation();
+  const {date=null} = getUrlParams(location);
+
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [pickDate, setPickDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const [workoutExs, setWorkoutExs] = useState([]);
+
+  const handleClose = (idEx) => {
+    setOpen(false);
+
+    if(!idEx){
+      return;
+    }
+
+    const ex = {
+      ...exercises.find(ex=>ex.id===idEx),
+      repeats:1,
+      measurment:1,
+      zIndex
+    };
+
+    zIndex++;
+
+    const newExs = [
+      ...workoutExs,
+      ex
+    ];
+
+    setWorkoutExs(newExs);
+  };
+
+  const [{exercises}, {getExercises, getWorkouts, createWorkout}] = useAppState();
+
+  useEffect(()=>{
+    getExercises();
+    getWorkouts();
+    let day;
+    if(date){
+      day = new Date(date);
+      if(day == 'Invalid Date'){
+        day = new Date();
+      }
+      day = new Date(day.setHours(day.getHours()+8));
+    }else{
+      day = new Date();
+    }
+    setPickDate(day);
+  },[]);
+
+  let newWorkoutEx = [];
+  const numWorkoutEx = workoutExs.length;
+  let numCallbacks = 0;
+  let numErrs = 0;
+
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    setIsSubmit(true);
+  }
+
+  function returnVals(vals,errs){
+    numCallbacks++;
+
+    if(errs){
+      numErrs++;
+    }
+
+    if(Object.keys(vals).length !== 0){
+      const idx = workoutExs.findIndex(exercise=>exercise.id===vals.id);
+
+      newWorkoutEx.push({
+        ...workoutExs[idx],
+        ...vals
+      });
+    }
+
+    if(numCallbacks===numWorkoutEx){
+      setIsSubmit(false);
+      if(numErrs<=0 && newWorkoutEx.length>0){
+        createWorkout({date: pickDate, exercises: newWorkoutEx});
+      }
+    }
+  }
+
+  const dateToString = (paramDate)=>{
+    // if(paramDate == 'Invalid Date'){
+    //   setPickDate(new Date());
+    // }
+    return parseDate(paramDate);
+  }
+
+  const delEx = (idEx)=>{
+    console.log('idEx = ', idEx);
+    const idx = workoutExs.findIndex((ex)=> ex.id===idEx);
+
+    const newArr = [
+      ...workoutExs.slice(0, idx),
+      ...workoutExs.slice(idx+1)
+    ];
+
+    setWorkoutExs(newArr);
+  }
+
+  const upExercise = (idEx) => {
+    setWorkoutExs(upInArray(idEx, workoutExs));
+  }
+
+  const downExercise = (idEx) =>{
+    setWorkoutExs(downInArray(idEx, workoutExs));
+  }
+
+  return{
+    isSubmit,
+    pickDate,
+    open,
+    handleClickOpen,
+    workoutExs,
+    handleClose,
+    exercises,
+    handleSubmit,
+    returnVals,
+    dateToString,
+    delEx,
+    upExercise,
+    downExercise
+  }
+}
+
+export default useDataWorkout;

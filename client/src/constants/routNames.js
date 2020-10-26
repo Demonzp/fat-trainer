@@ -6,4 +6,5 @@ export default class RoutNames{
   static newExercise="/new_exercise";
   static editExercises="/edit_exercises";
   static newWorkout = "/new_workout";
+  static editWorkout = "/edit_workout";
 }

@@ -2,6 +2,11 @@ import MsgTypes from "../../constants/msgTypes";
 
 const Workout = (state, dispath, axios, addMessage)=>{
   const getWorkouts = async()=>{
+
+    if(state.isLoadedWorkouts){
+      return;
+    }
+
     let response = {};
 
     try {

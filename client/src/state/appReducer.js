@@ -7,7 +7,8 @@ const initialState = {
   appMessage:[],
   exercises:[],
   isLoadedExercises:false,
-  workouts:[]
+  workouts:[],
+  isLoadedWorkouts:false
 };
 
 const appStateReducer = (state, action) => {
@@ -70,7 +71,7 @@ const appStateReducer = (state, action) => {
       return { ...state, exercises: newExercises}
     }
     case "SET_WORKOUTS":{
-      return {...state, workouts: action.workouts}
+      return {...state, isLoadedWorkouts: true, workouts: action.workouts}
     }
     case "ADD_WORKOUT":{
       return {...state, workouts:[...state.workouts, action.workout]}
