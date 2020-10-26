@@ -65,7 +65,7 @@ const Workout = (state, dispath, axios, addMessage)=>{
       return Promise.reject(response.data);
     }
 
-    dispath({type:"ADD_WORKOUT", workout:response.data});
+    dispath({type:"UPDATE_WORKOUT", workout:response.data});
     addMessage({type:MsgTypes.success,txt:response.data.message});
     return Promise.resolve(response.data);
   }

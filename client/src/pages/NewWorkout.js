@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from "react";
+import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { 
@@ -76,7 +76,7 @@ function NewWorkoutPage(){
                   {workoutExs.map((exercise,i)=>{
                     return (
                       <WorkoutExItem 
-                        key={exercise.id}
+                        key={exercise.key}
                         isSubmit={isSubmit}
                         exercise={exercise}
                         returnVals={returnVals}

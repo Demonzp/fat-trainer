@@ -74,7 +74,17 @@ const appStateReducer = (state, action) => {
       return {...state, isLoadedWorkouts: true, workouts: action.workouts}
     }
     case "ADD_WORKOUT":{
+      console.log('ADD_WORKOUT_', action.workout);
       return {...state, workouts:[...state.workouts, action.workout]}
+    }
+    case "UPDATE_WORKOUT":{
+      const idx = state.workouts.findIndex(workout=>workout._id===action.workout._id);
+      const newWorkouts = [
+        ...state.workouts.slice(0, idx),
+        action.workout,
+        ...state.workouts.slice(idx+1)
+      ]
+      return {...state, workouts: newWorkouts}
     }
     default:
       return state

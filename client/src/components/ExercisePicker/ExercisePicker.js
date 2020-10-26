@@ -40,9 +40,9 @@ function SimpleDialog(props) {
       <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
       <List>
         {exercises.map((ex) => (
-          workoutExs.find(workoutEx=>workoutEx.id===ex.id)?
-            null
-          :
+          // workoutExs.find(workoutEx=>workoutEx.id===ex.id)?
+          //   null
+          // :
             <ListItem button onClick={() => handleListItemClick(ex.id)} key={ex.id}>
               <ListItemAvatar>
                 <Avatar className={classes.avatar}>

@@ -1,4 +1,4 @@
-import React,{ useState, useEffect, useReducer } from "react";
+import React,{ useState, useEffect } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { 
@@ -16,11 +16,8 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 
 import {useAppState} from "state/appState";
-import {useHistory} from "react-router-dom";
-import {parseDate} from "utils/global";
+import {parseDate, createId} from "utils/global";
 import useDataWorkout from "utils/useDataWorkout";
-
-import RoutNames from "../constants/routNames";
 
 import WorkoutExItem from "components/WorkoutExItem/WorkoutExItem.js";
 import ExercisePicker from "components/ExercisePicker/ExercisePicker.js";
@@ -43,13 +40,14 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 const getFullExercises = (workExs, exs)=>{
+  console.log('exs = ', exs);
   const full = workExs.map(workEx=>{
     let idx = exs.findIndex(ex=>ex.id===workEx._id);
-    //console.log('idx = ', idx);
+    
     return {
       ...workEx,
-      name:'unknown',
-      ...exs[idx]
+      ...exs[idx],
+      key:createId(10)
     }
   });
 
@@ -69,6 +67,8 @@ function EditWorkout(){
     setWorkoutExs,
     open,
     exercises,
+    history,
+    RoutNames,
     setIdWorkout,
     handleClickOpen,
     handleClose,
@@ -80,8 +80,6 @@ function EditWorkout(){
     downExercise
   } = useDataWorkout("update");
 
-  const history = useHistory();
-
   const [{workouts, isLoadedExercises, isLoadedWorkouts}] = useAppState();
   const [isSetDate, setIsSetDate] = useState(false);
 
@@ -90,19 +88,18 @@ function EditWorkout(){
       setIsSetDate(true);
       return;
     }
-    //console.log('day = ', pickDate);
+
     if(!isLoadedExercises || !isLoadedWorkouts){
       return;
     }
-    
+
     const selectWork = workouts.find(work=>parseDate(new Date(work.date))===parseDate(new Date(pickDate)));
-    //console.log('selectWork = ', selectWork);
-    setIdWorkout(selectWork._id);
 
     if(!selectWork){
       history.push(`${RoutNames.newWorkout}?date=${pickDate}`);
       return;
     }
+    setIdWorkout(selectWork._id);
     setWorkoutExs(getFullExercises(selectWork.exercises, exercises));
     
   },[pickDate, isLoadedExercises, isLoadedWorkouts]);
@@ -127,7 +124,7 @@ function EditWorkout(){
                   {workoutExs.map((exercise,i)=>{
                     return (
                       <WorkoutExItem 
-                        key={i}
+                        key={exercise.key}
                         isSubmit={isSubmit}
                         exercise={exercise}
                         returnVals={returnVals}

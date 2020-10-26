@@ -10,7 +10,7 @@ const newExercise = (ex)=>{
     zIndex
   }
 
-  delete newEx._id;
+  //delete newEx._id;
   zIndex++;
   return newEx;
 }
@@ -141,48 +141,10 @@ const Exercise = (state, dispath, axios, addMessage)=>{
   }
 
   const downExercise = (id)=>{
-    // const idx = state.exercises.findIndex((ex)=>ex.id===id);
-
-    // if(idx>=state.exercises.length-1){
-    //   return;
-    // }
-
-    // const newExercises = [
-    //   ...state.exercises.slice(0, idx),
-    //   {
-    //     ...state.exercises[idx+1],
-    //     zIndex: state.exercises[idx].zIndex
-    //   },
-    //   {
-    //     ...state.exercises[idx],
-    //     zIndex: state.exercises[idx+1].zIndex
-    //   },
-    //   ...state.exercises.slice(idx + 2)
-    // ];
-
     dispath({type:"UPDATE_EXERCISES", exercises:downInArray(id, state.exercises)});
   }
 
   const upExercise = (id)=>{
-    // const idx = state.exercises.findIndex((ex)=>ex.id===id);
-
-    // if(idx===0){
-    //   return;
-    // }
-
-    // const newExercises = [
-    //   ...state.exercises.slice(0, idx-1),
-    //   {
-    //     ...state.exercises[idx],
-    //     zIndex: state.exercises[idx-1].zIndex
-    //   },
-    //   {
-    //     ...state.exercises[idx-1],
-    //     zIndex: state.exercises[idx].zIndex
-    //   },
-    //   ...state.exercises.slice(idx+1)
-    // ];
-
     dispath({type:"UPDATE_EXERCISES", exercises:upInArray(id, state.exercises)});
   }
 

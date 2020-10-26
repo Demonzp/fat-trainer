@@ -117,7 +117,7 @@ const WorkoutExItem = ({exercise, isSubmit, returnVals, delEx, downExercise, upE
           variant="contained"
           color="primary"
           size="large"
-          onClick={()=>{upExercise(exercise.id)}}
+          onClick={()=>{upExercise(exercise.key)}}
           className={classes.button}
         >
           <ArrowUpwardIcon />
@@ -126,7 +126,7 @@ const WorkoutExItem = ({exercise, isSubmit, returnVals, delEx, downExercise, upE
           variant="contained"
           color="primary"
           size="large"
-          onClick={()=>{downExercise(exercise.id)}}
+          onClick={()=>{downExercise(exercise.key)}}
           className={classes.button}
         >
           <ArrowDownwardIcon />
@@ -135,7 +135,7 @@ const WorkoutExItem = ({exercise, isSubmit, returnVals, delEx, downExercise, upE
           variant="contained"
           color="primary"
           size="large"
-          onClick={()=>{delEx(exercise.id)}}
+          onClick={()=>{delEx(exercise.key)}}
           className={classes.button}
         >
           <ClearIcon />
