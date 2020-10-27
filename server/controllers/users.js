@@ -10,8 +10,8 @@ userRouter.get('/users/', authMdw, async (req, res) => {
     try {
         const { userID } = req.user;
         const user = await User.findOne({ _id: userID });
-        if(!user){
-            throw new Error('maby invalid token');
+        if (!user) {
+            throw new Error('Old token discovered in local storage. Please logout at first!');
         }
         res.json(user);
     } catch (err) {
@@ -44,16 +44,16 @@ userRouter.delete('/users/delete/', authMdw, async (req, res) => {
     }
 });
 
-// GET list of all existed users (TEST ONLY).
-userRouter.get('/users/all', async (req, res) => {
-    try {
-        const user = await User.find({});
-        res.json(user);
-    } catch (err) {
-        console.log(err);
-        res.json({ message: err.message });
-    }
-});
+// // GET list of all existed users (TEST ONLY).
+// userRouter.get('/users/', async (req, res) => {
+//     try {
+//         const user = await User.find({});
+//         res.json(user);
+//     } catch (err) {
+//         console.log(err);
+//         res.json({ message: err.message });
+//     }
+// });
 
 // // CREATE new user profiles (TEST ONLY).
 // userRouter.post('/users/create', async (req, res) => {

@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
 
     try {
         await jwt.verify(token, process.env.ACCESS_SECRET_KEY, (err, user) => {
-            if(err){
+            if (err) {
                 throw err;
             }
             req.user = { userID: user };
